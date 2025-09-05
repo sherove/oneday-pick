@@ -14,6 +14,15 @@ export default function LoginPage() {
     alert(`${provider} 로그인 시도`);
   };
 
+   // ✅ 카카오 로그인
+  const handleKakaoLogin = () => {
+    const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
+    const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+    const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+    window.location.href = kakaoURL;
+  };
+
   return (
     <section className="hero">
       <div
@@ -71,7 +80,7 @@ export default function LoginPage() {
             <button
               className="btn btn-outline"
               style={{ width: "100%", background: "#FEE500", color: "#000" }}
-              onClick={() => handleSocialLogin("카카오")}
+              onClick={() => handleKakaoLogin()}
             >
               카카오로 로그인
             </button>

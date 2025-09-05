@@ -43,7 +43,7 @@ export default function Home() {
           <div className="hero-art">
             <img
               alt="클래스 히어로 이미지"
-              src="https://images.unsplash.com/photo-1516054719048-38394ee74f58?q=80&w=1200&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1473186505569-9c61870c11f9?q=80&w=1200&auto=format&fit=crop"
             />
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function Home() {
               title="아로마 디퓨저 만들기"
               place="2시간 · 성수"
               price="₩30,000"
-              img="https://images.unsplash.com/photo-1610632380989-680fe40816d2?q=80&w=1200&auto=format&fit=crop"
+              img="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop"
             />
           </div>
         </div>
