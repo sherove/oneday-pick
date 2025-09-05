@@ -25,10 +25,7 @@ export default function LoginPage() {
 
   return (
     <section className="hero">
-      <div
-        className="container"
-        style={{ display: "grid", placeItems: "center", minHeight: "90vh" }}
-      >
+      <div className="container center-page">
         <div
           className="card"
           style={{ maxWidth: "420px", width: "100%", padding: "32px" }}
