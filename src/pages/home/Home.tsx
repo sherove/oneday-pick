@@ -1,13 +1,8 @@
 import { useState } from "react";
-import Header from "../../components/common/Header";
-import Footer from "../../components/common/Footer";
+
 import ClassCard from "../../components/UIComponents/ClassCard";
 
-type HomeProps = {
-  user: string;
-};
-
-export default function Home({ user }: HomeProps) {
+export default function Home() {
   const [query, setQuery] = useState<string>("");
 
   const handleSearch = () => {
@@ -16,8 +11,6 @@ export default function Home({ user }: HomeProps) {
 
   return (
     <div className="App">
-      <Header user={user} />
-
       {/* Hero */}
       <section className="hero">
         <div className="container hero-inner">
@@ -83,8 +76,6 @@ export default function Home({ user }: HomeProps) {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

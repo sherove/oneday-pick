@@ -5,7 +5,12 @@ type ClassCardProps = {
   img: string;
 };
 
-export default function ClassCard({ title, place, price, img }: ClassCardProps) {
+export default function ClassCard({
+  title,
+  place,
+  price,
+  img,
+}: ClassCardProps) {
   return (
     <article className="card">
       <img alt={title} src={img} />
