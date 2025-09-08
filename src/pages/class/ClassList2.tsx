@@ -1,6 +1,8 @@
-import ClassCard from "../../components/UIComponents/ClassCard";
-import "./ClassList.css";
+// import ClassCard from "../../components/UIComponents/ClassCard";
 import { useState } from "react";
+import "./ClassList.css";
+import ClassCard from "../../components/UIComponents/ClassCard";
+// import { useState } from "react";
 
 
 const dummyData = [
@@ -16,34 +18,14 @@ const dummyData = [
 
 export default function ClassList() {
 
-   // 날짜 검색
+  // 날짜 검색
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
 
-  // 지역 / 타입
-  const [searchPlace, setSearchPlace] = useState("");
-  const [searchType, setSearchType] = useState("");
-
-  // 가격 검색
-  const [minPrice, setMinPrice] = useState<number | "">("");
-  const [maxPrice, setMaxPrice] = useState<number | "">("");
-
-  // 필터링 로직
   const filteredData = dummyData.filter((item) => {
     const matchStartDate = startDate ? item.date >= startDate : true;
-    const matchEndDate = endDate ? item.date <= endDate : true;
-    const matchPlace = searchPlace ? item.place.includes(searchPlace) : true;
-    const matchType = searchType ? item.type.includes(searchType) : true;
-    const matchMinPrice = minPrice ? item.price >= +minPrice : true;
-    const matchMaxPrice = maxPrice ? item.price <= +maxPrice : true;
 
     return (
-      matchStartDate &&
-      matchEndDate &&
-      matchPlace &&
-      matchType &&
-      matchMinPrice &&
-      matchMaxPrice
+      matchStartDate
     );
   });
 
@@ -66,8 +48,6 @@ export default function ClassList() {
             <label>종료일</label>
             <input
               type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
             <div className="field">
@@ -75,8 +55,6 @@ export default function ClassList() {
               <input
                 type="text"
                 placeholder="예: 강남"
-                value={searchPlace}
-                onChange={(e) => setSearchPlace(e.target.value)}
               />
             </div>
             <div className="field">
@@ -84,8 +62,6 @@ export default function ClassList() {
               <input
                 type="text"
                 placeholder="예: 베이킹"
-                value={searchType}
-                onChange={(e) => setSearchType(e.target.value)}
               />
             </div>
              <div className="field">
@@ -93,10 +69,6 @@ export default function ClassList() {
             <input
               type="number"
               placeholder="예: 20000"
-              value={minPrice}
-              onChange={(e) =>
-                setMinPrice(e.target.value ? +e.target.value : "")
-              }
             />
           </div>
           <div className="field">
@@ -104,26 +76,21 @@ export default function ClassList() {
             <input
               type="number"
               placeholder="예: 30000"
-              value={maxPrice}
-              onChange={(e) =>
-                setMaxPrice(e.target.value ? +e.target.value : "")
-              }
             />
             </div>
           </div>
 
 
-          {/* 카드 리스트 */}
           <div className="grid">
             {filteredData.map((item) => (
-              <ClassCard
-                key={item.id}
-                title={item.title}
-                place={item.place}
-                price={`₩${item.price.toLocaleString()}`}
-                img={item.img}
-                className="class-card"
-              />
+               <ClassCard
+                  key={item.id}
+                  title={item.title}
+                  place={item.place}
+                  price={`₩${item.price.toLocaleString()}`}
+                  img={item.img}
+                  className="class-card"
+                />
             ))}
           </div>
         </div>

@@ -23,6 +23,20 @@ export default function LoginPage() {
     window.location.href = kakaoURL;
   };
 
+  // ✅ 로그인
+  // 네이버 로그인 함수
+  const handleNaverLogin = () => {
+    const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
+    const STATE = Math.random().toString(36).substring(2, 15);
+    const REDIRECT_URI = import.meta.env.VITE_NAVER_REDIRECT_URI;
+
+    // 👉 state는 localStorage에 저장해둬야 나중에 비교 가능
+    localStorage.setItem("naver_state", STATE);
+
+    const naverURL = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${NAVER_CLIENT_ID}&state=${STATE}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
+    window.location.href = naverURL;
+  }
+
   return (
     <section className="hero">
       <div className="container center-page">
@@ -84,7 +98,7 @@ export default function LoginPage() {
             <button
               className="btn btn-outline"
               style={{ width: "100%", background: "#03C75A", color: "#fff" }}
-              onClick={() => handleSocialLogin("네이버")}
+              onClick={() => handleNaverLogin()}
             >
               네이버로 로그인
             </button>

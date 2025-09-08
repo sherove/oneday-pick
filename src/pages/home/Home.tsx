@@ -76,6 +76,33 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Featured Classes */}
+      <section id="featured" className="section">
+        <div className="container">
+          <h2>추천 클래스</h2>
+          <p className="muted">인기/신규 클래스를 골라봤어요.</p>
+          <div className="grid grid-3">
+            <ClassCard
+              title="초보자를 위한 베이킹 클래스"
+              place="2시간 · 강남"
+              price="₩50,000"
+              img="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop"
+            />
+            <ClassCard
+              title="힐링 수채화 원데이"
+              place="1.5시간 · 홍대"
+              price="₩40,000"
+              img="https://images.unsplash.com/photo-1473186505569-9c61870c11f9?q=80&w=1200&auto=format&fit=crop"
+            />
+            <ClassCard
+              title="아로마 디퓨저 만들기"
+              place="2시간 · 성수"
+              price="₩30,000"
+              img="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop"
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -16,7 +16,7 @@ export default function App({ user }: AppProps) {
   return (
     <BrowserRouter>
       <Header user={user} />
-      <div className="main-content">
+      <main className="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -24,7 +24,7 @@ export default function App({ user }: AppProps) {
           <Route path="/auth" element={<Auth />} />
           <Route path="/class-list" element={<ClassList />} />
         </Routes>
-      </div>
+      </main>
       <Footer />
     </BrowserRouter>
   );

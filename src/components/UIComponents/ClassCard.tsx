@@ -3,6 +3,7 @@ type ClassCardProps = {
   place: string;
   price: string;
   img: string;
+  className?: string;   // ✅ 추가
 };
 
 export default function ClassCard({

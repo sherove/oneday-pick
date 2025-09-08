@@ -279,3 +279,14 @@ footer {
     display: none;
   }
 }
+
+/* classList */
+.class-list {
+  min-height: calc(100vh - 60px); /* 헤더 제외한 높이만큼 */
+  padding: 80px 40px;             /* 안쪽 여백은 적당히 */
+  background: linear-gradient(180deg, #eef2ff, #ffffff);
+}
+/* 브라우저 기본 h2 margin-top 제거 */
+.class-list h2 {
+  margin: 0 0 16px;    /* ✅ 위 0, 아래 16px */
+}
