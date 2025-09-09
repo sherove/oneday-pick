@@ -16,6 +16,7 @@ export default function LoginPage() {
 
    // ✅ 카카오 로그인
   const handleKakaoLogin = () => {
+    localStorage.setItem("loginType", "kakao");
     const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
     const REDIRECT_URI = import.meta.env.VITE_KAKAO_REDIRECT_URI;
     const kakaoURL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -26,6 +27,7 @@ export default function LoginPage() {
   // ✅ 로그인
   // 네이버 로그인 함수
   const handleNaverLogin = () => {
+    localStorage.setItem("loginType", "naver");
     const NAVER_CLIENT_ID = import.meta.env.VITE_NAVER_CLIENT_ID;
     const STATE = Math.random().toString(36).substring(2, 15);
     const REDIRECT_URI = import.meta.env.VITE_NAVER_REDIRECT_URI;

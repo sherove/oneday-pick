@@ -9,11 +9,6 @@ export default defineConfig({
       target: 'https://nid.naver.com',
       changeOrigin: true,
       rewrite: (path) => path.replace(/^\/api\/naver/, '')
-    },
-    '/api/naveropen': {
-      target: 'https://openapi.naver.com',
-      changeOrigin: true,
-      rewrite: path => path.replace(/^\/api\/naveropen/, ''),
     }
   }  
 }
