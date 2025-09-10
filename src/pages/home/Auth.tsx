@@ -36,8 +36,7 @@ export default function Auth() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("카카오 토큰:", data);
-        localStorage.setItem("kakao_token", data.access_token);
+        localStorage.setItem("token", data.access_token);
 
         return fetch("https://kapi.kakao.com/v2/user/me", {
           headers: {
@@ -48,7 +47,7 @@ export default function Auth() {
       .then((res) => res.json())
       .then((user) => {
         localStorage.setItem("user", JSON.stringify({...user, platform: "kakao"}));
-        localStorage.removeItem("loginType");
+        localStorage.setItem("LoginType", "kakao");
         navigate("/");
       })
       .catch((err) => console.error("카카오 로그인 에러:", err));
@@ -59,7 +58,6 @@ export default function Auth() {
   // 🔥 타입 지정 추가
   const handleNaverAuth = async (code: string, state: string | null) => {
     try {
-      console.group("[NAVER] 토큰 요청 시작");
       
       // 1. 토큰 요청
       const tokenUrl = "/api/naver/oauth2.0/token";
@@ -80,10 +78,8 @@ export default function Auth() {
         body: tokenBody,
       });
 
-      console.log("⬅️ 토큰 응답 상태:", tokenRes.status, tokenRes.statusText);
       
       const tokenRaw = await tokenRes.text();
-      console.log("⬇️ 토큰 원본 응답:", tokenRaw.slice(0, 400));
 
       // 2. 토큰 파싱
       let tokenData: any;
@@ -118,11 +114,9 @@ export default function Auth() {
         return;
       }
 
-      console.log("✅ 토큰 성공:", tokenData);
-      localStorage.setItem("naver_token", tokenData.access_token);
+      localStorage.setItem("token", tokenData.access_token);
 
       // 3. 사용자 정보 요청 - Node.js 프록시 서버 사용
-      console.log("➡️ 사용자 정보 요청 시작");
 
       const userRes = await fetch("http://localhost:3001/api/naveropen/v1/nid/me", {
         method: "GET",
@@ -133,10 +127,8 @@ export default function Auth() {
         },
       });
 
-      console.log("⬅️ 사용자 정보 응답 상태:", userRes.status, userRes.statusText);
       
       const userRaw = await userRes.text();
-      console.log("⬇️ 사용자 정보 원본:", userRaw.slice(0, 400));
 
       let userData: any;
       try {
@@ -157,7 +149,6 @@ export default function Auth() {
         return;
       }
 
-      console.log("✅ 사용자 정보 성공:", userData);
 
       // 4. 사용자 정보 저장 및 리다이렉트
       const userInfo = {
@@ -170,7 +161,6 @@ export default function Auth() {
       };
 
       localStorage.setItem("user", JSON.stringify(userInfo));
-      localStorage.removeItem("loginType");
       localStorage.removeItem("naver_state");
       
       console.log("✅ 네이버 로그인 완료:", userInfo);

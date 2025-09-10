@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 type AppProps = {
@@ -12,40 +12,56 @@ export default function Header({ user }: AppProps) {
 
    // 로그인 상태 관리 (예: localStorage에 토큰이 있으면 로그인된 걸로 처리)
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-  // 내가 하고싶은건? 로그인 버튼 로그아웃버튼 두개가 있는데 소셜로그인 완료하면 -> 로그아웃버튼으로 바뀌기 
-  // 확인해야하는건? 소셜로그인 어디서 가져오나 그리고 그거 상태값 어디에 담는가?
+  const [saveLoginType, setSaveLoginType] = useState<String>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("kakao_token");
-    if (token) {
+    const storedToken = localStorage.getItem("token");
+    const storedLoginType = localStorage.getItem("loginType");
+
+    if (storedToken && (storedLoginType === "kakao" || storedLoginType === "naver")) {
       setIsLoggedIn(true);
+      setSaveLoginType(storedLoginType);
     } else {
       setIsLoggedIn(false);
+      setSaveLoginType("");
     }
-  }, [location]); // 페이지 이동할 때마다 갱신
+  }, [location]);
 
 
-   useEffect(() => {
-    const token = localStorage.getItem("kakao_token");
-    if (token) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [location]); // 페이지 이동할 때마다 갱신
-
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // 1. 로컬 저장소에서 토큰 삭제
-    localStorage.removeItem("kakao_token");
+    const loginType = localStorage.getItem("loginType");
+    const token = localStorage.getItem("token");
+    console.log('로그인타입 : ', loginType);
 
-    // 2. 카카오 로그아웃 API 호출 (선택)
-    const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
-    const LOGOUT_REDIRECT_URI =  import.meta.env.VITE_KAKAO_LOGOUT_REDIRECT_URI; // 홈으로 리다이렉트
-    window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
-    // window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${encodeURIComponent(LOGOUT_REDIRECT_URI)}`;
-  };
+     // 1. 로컬 저장소에서 토큰 & 로그인 타입 삭제
+    if("kakao" === loginType) {
+      const REST_API_KEY = import.meta.env.VITE_KAKAO_REST_API_KEY;
+      const LOGOUT_REDIRECT_URI =  import.meta.env.VITE_KAKAO_LOGOUT_REDIRECT_URI; // 홈으로 리다이렉트
+      window.location.href = `https://kauth.kakao.com/oauth/logout?client_id=${REST_API_KEY}&logout_redirect_uri=${LOGOUT_REDIRECT_URI}`;
 
+    } else if ("naver" === loginType){     
+      try {
+        await fetch(`http://localhost:3001/api/naver/logout?token=${token}`, {
+          method: "GET",
+        });
+   
+        console.log("네이버 로그아웃 완료");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("loginType");
+
+    // 상태 업데이트
+    setIsLoggedIn(false);
+    setSaveLoginType("");
+    navigate("/");
+  }
 
   return (
     <header className="header">

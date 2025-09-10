@@ -4,7 +4,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/home/Login";
 import Signup from "./pages/home/Signup";
 import Auth from "./pages/home/Auth";
-import ClassList from "./pages/class/ClassList";
+import ClassList2 from "./pages/class/ClassList2";
 import Header from "./components/common/Header";
 import Footer from "./components/common/Footer";
 
@@ -22,7 +22,7 @@ export default function App({ user }: AppProps) {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/auth" element={<Auth />} />
-          <Route path="/class-list" element={<ClassList />} />
+          <Route path="/class-list" element={<ClassList2 />} />
         </Routes>
       </main>
       <Footer />

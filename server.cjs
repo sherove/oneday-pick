@@ -19,7 +19,7 @@ app.get('/api/naveropen/v1/nid/me', async (req, res) => {
     });
     
     const data = await response.text();
-    console.log('네이버 응답:', response.status, data.slice(0, 100));
+    console.log('네이버 사용자 정보 응답:', response.status, data.slice(0, 100));
     
     res.status(response.status).send(data);
   } catch (error) {
@@ -27,6 +27,37 @@ app.get('/api/naveropen/v1/nid/me', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+
+// 네이버 로그아웃 프록시
+app.get('/api/naver/logout', async (req, res) => {
+  const { token } = req.query;
+  console.log("🔥 /api/naver/logout 요청 들어옴", req.query); // ✅ 추가
+
+  try {
+    const response = await fetch(
+      `https://nid.naver.com/oauth2.0/token` +
+      `?grant_type=delete` +
+      `&client_id=${process.env.NAVER_CLIENT_ID}` +
+      `&client_secret=${process.env.NAVER_CLIENT_SECRET}` +
+      `&access_token=${token}` +
+      `&service_provider=NAVER`,
+      { method: "GET" }
+    );
+
+    const data = await response.text();
+    
+    console.log("네이버 로그아웃 응답:", response.status, data); // ✅ 응답 찍기
+
+     res.status(response.status).send(data);
+    
+  } catch (error) {
+    console.error("네이버 로그아웃 프록시 에러:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 app.listen(3001, () => {
   console.log('프록시 서버가 http://localhost:3001 에서 실행 중');

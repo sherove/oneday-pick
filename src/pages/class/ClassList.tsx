@@ -121,6 +121,7 @@ export default function ClassList() {
                 title={item.title}
                 place={item.place}
                 price={`₩${item.price.toLocaleString()}`}
+                instructor='솜씨당'
                 img={item.img}
                 className="class-card"
               />
